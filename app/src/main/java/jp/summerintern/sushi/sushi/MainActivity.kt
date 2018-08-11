@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showOneResult(result: Boolean) {
-        sushiFlow.eatSushi(result)
+        sushiFlow.eatSushi(result, stage)
         if (result) {
             stage.updateResults(1)
             Toast.makeText(this, "正解！", Toast.LENGTH_SHORT).show()
