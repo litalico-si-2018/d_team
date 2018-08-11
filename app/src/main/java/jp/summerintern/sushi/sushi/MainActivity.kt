@@ -21,22 +21,19 @@ class MainActivity : AppCompatActivity() {
     private val maxTime: Int = 30 //とりあえず30秒にしているだけ
     private var seconds: Int = maxTime
     private lateinit var sushiList: List<String>
-    private lateinit var probs: ArrayList<Problem>
-    private lateinit var answers: HashMap<Int, Boolean>
+    private var probs = ArrayList<Problem>()
+    private var answers = HashMap<Int, Boolean>()
     private lateinit var stage: Stage
-    private lateinit var sushiFlow: SushiFlow
+    private var sushiFlow = SushiFlow()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val probListView = findViewById<ListView>(R.id.probs)
         val submitButton: Button = findViewById(R.id.submit_button)
 
         for (i in 0 until 2) {
-//            println(resources.getIdentifier("prob" + i, "id", packageName))
-//            val v = View.inflate(this, resources.getIdentifier("prob" + i, "id", packageName), null)
-            val v:View=findViewById(resources.getIdentifier("prob" + i, "id", packageName))
+            val v: View = findViewById(resources.getIdentifier("prob" + i, "id", packageName))
 
             val cb = v.findViewById<Button>(R.id.correct_button)
             cb.setOnClickListener {
@@ -81,6 +78,9 @@ class MainActivity : AppCompatActivity() {
                         timeBar.progress = seconds
                     }
                 })
+
+        sushiFlow = SushiFlow()
+        genProbs()
     }
 
     private fun judge(): Boolean {
@@ -102,7 +102,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun resetProbs() {
+        probs.clear()
+        answers.clear()
+        sushiFlow.resetSushi()
+    }
+
     private fun genProbs() {
+
         probs.clear()
         answers.clear()
         sushiFlow.resetSushi()
@@ -111,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             val p = Problem()
             probs.add(p)
 
-            val v = View.inflate(this, resources.getIdentifier("prob" + i, "id", packageName), null)
+            val v: View = findViewById(resources.getIdentifier("prob" + i, "id", packageName))
             v.findViewById<TextView>(R.id.answer).setText("　")
             v.findViewById<TextView>(R.id.problem_sentence).setText(p.sentence)
         }
