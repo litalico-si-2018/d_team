@@ -2,15 +2,27 @@ package jp.summerintern.sushi.sushi
 
 import java.util.*
 
-class Problem(var sentence: String) {
+class Problem() {
 
-
-
+    private var level:Int = 1
     private var leftNumber:Int = 0
     private var rightNumber:Int = 0
+    private var count = 0
+    private var sentence = ""
+
+    init {
+
+       count+=1
+
+        var prob = Problem()
+        prob.genSentence(count%4 != Random().nextInt(4) )
 
 
-    fun genSentence(ans_flag: Boolean): String {
+    }
+
+
+
+    fun genSentence(ans_flag: Boolean) {
 
         leftNumber = Random().nextInt(8) + 1
         rightNumber = Random().nextInt(8) + 1
@@ -24,7 +36,7 @@ class Problem(var sentence: String) {
             sentence = "${leftNumber} - ${rightNumber} = ${leftNumber + rightNumber}"
         }
 
-        return sentence
+        this.sentence = sentence
 
     }
 
