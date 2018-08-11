@@ -51,15 +51,15 @@
             android:orientation="vertical">
 
             <include
+                android:id="@+id/prob0"
+                layout="@layout/problem" />
+
+            <include
                 android:id="@+id/prob1"
                 layout="@layout/problem" />
 
             <include
                 android:id="@+id/prob2"
-                layout="@layout/problem" />
-
-            <include
-                android:id="@+id/prob3"
                 layout="@layout/problem" />
         </LinearLayout>
     </ScrollView>

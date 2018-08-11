@@ -8,7 +8,7 @@ class SushiFlow() {
 
     fun flowSushi(){}
 
-    fun eatSushi(){}
+    fun eatSushi(result: Boolean){}
 
     fun resetSushi(){}
 }

@@ -31,10 +31,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 //        val probListView = findViewById<ListView>(R.id.probs)
-        val submitButton = findViewById<Button>(R.id.submit_button)
+        val submitButton: Button = findViewById(R.id.submit_button)
 
         for (i in 0 until 2) {
-            val v = View.inflate(this, resources.getIdentifier("prob" + i, "id", packageName), null)
+//            println(resources.getIdentifier("prob" + i, "id", packageName))
+//            val v = View.inflate(this, resources.getIdentifier("prob" + i, "id", packageName), null)
+            val v:View=findViewById(resources.getIdentifier("prob" + i, "id", packageName))
 
             val cb = v.findViewById<Button>(R.id.correct_button)
             cb.setOnClickListener {
