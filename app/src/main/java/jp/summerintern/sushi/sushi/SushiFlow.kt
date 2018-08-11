@@ -2,8 +2,13 @@ package jp.summerintern.sushi.sushi
 
 import java.util.*
 
-class SushiFlow(val time: Date) {
-    fun flowSushi()
+class SushiFlow() {
 
-    fun eatSushi()
+    val sushi: String = "たまご"
+
+    fun flowSushi(){}
+
+    fun eatSushi(){}
+
+    fun resetSushi(){}
 }
