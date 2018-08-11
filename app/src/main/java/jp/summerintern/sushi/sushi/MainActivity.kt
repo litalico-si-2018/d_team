@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val submitButton: Button = findViewById(R.id.submit_button)
 
-        for (i in 0 until 2) {
+        for (i in 0 until 3) {
             val v: View = findViewById(resources.getIdentifier("prob" + i, "id", packageName))
 
             val cb = v.findViewById<Button>(R.id.correct_button)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val icb = v.findViewById<Button>(R.id.incorrect_button)
-            cb.setOnClickListener {
+            icb.setOnClickListener {
                 v.findViewById<TextView>(R.id.answer).setText("×")
                 answers[i] = false
             }
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         answers.clear()
         sushiFlow.resetSushi()
 
-        for (i in 0 until 2) {
+        for (i in 0 until 3) {
             val p = Problem()
             probs.add(p)
 
