@@ -20,13 +20,15 @@
         android:id="@+id/sushi_background"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@drawable/sushi_transporter"
         android:layout_alignBottom="@+id/remaining_time_bar">
 
         <ImageView
             android:id="@+id/sushi_flow"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/sushi_ikura" />
 
     </LinearLayout>
 

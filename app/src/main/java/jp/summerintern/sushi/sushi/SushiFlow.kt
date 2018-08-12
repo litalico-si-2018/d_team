@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import io.reactivex.Observable
@@ -15,7 +16,7 @@ class SushiFlow(val activity: Activity) {
     private var t: Float = 0.0F
     private val handDuration: Int = 2000
     private val sushiDuration: Long = 10L     // 寿司の一回の移動時間。色々試す。
-    private lateinit var sushiMoveAnimation: TranslateAnimation
+    private lateinit var sushiMoveAnimation: Animation
     private lateinit var godhandAppearAnimation: TranslateAnimation
     private lateinit var godhandDisappearAnimation: TranslateAnimation
     private lateinit var sushiImageView: ImageView
@@ -27,20 +28,6 @@ class SushiFlow(val activity: Activity) {
                 .subscribe({
                     counter += 0.1F
                 })
-
-        sushiMoveAnimation = TranslateAnimation(
-                Animation.ABSOLUTE, -100.0f,
-                Animation.ABSOLUTE, 500.0f,
-                Animation.ABSOLUTE, -1400.0f,
-                Animation.ABSOLUTE, -1400.0f
-        )
-
-        // animation時間 msec
-        sushiMoveAnimation.setDuration(this.sushiDuration)
-        // 繰り返し回数
-        sushiMoveAnimation.setRepeatCount(0)
-        // animationが終わった表示をやめる
-        sushiMoveAnimation.setFillAfter(false)
     }
 
     val sushi: String = "たまご"
@@ -55,6 +42,7 @@ class SushiFlow(val activity: Activity) {
 
     fun resetSushi() {
         // flowSushiで行われているアニメーションをキャンセルする
+        sushiMoveAnimation = AnimationUtils.loadAnimation(activity, R.anim.sushi_horizontal_move)
         sushiMoveAnimation.reset()
         counter = 0.0F
     }
@@ -71,7 +59,7 @@ class SushiFlow(val activity: Activity) {
     }
 
     private fun changePlateNum(n: Int) {
-        val plates = activity.findViewById<ImageView>(R.id.sushi_flow)
+        val plates = activity.findViewById<ImageView>(R.id.plate_images)
 
         if (n == 0) {
             plates.visibility = View.INVISIBLE
@@ -84,7 +72,10 @@ class SushiFlow(val activity: Activity) {
 
     private fun startSushiTranslate() {
 
+        sushiMoveAnimation = AnimationUtils.loadAnimation(activity, R.anim.sushi_horizontal_move);
+
         sushiImageView = activity.findViewById(R.id.sushi_flow)
+
 
 //        val set = AnimationSet(true)
 
