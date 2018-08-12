@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".MainActivity">
 
     <ProgressBar
         android:id="@+id/remaining_time_bar"
@@ -17,22 +17,34 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp" />
 
-    <LinearLayout
-        android:id="@+id/sushi_background"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/sushi_transporter"
-        android:layout_below="@+id/remaining_time_bar"
-        android:layout_marginBottom="16dp">
+
+    <RelativeLayout
+        android:id="@+id/sushi_table"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+
+
+        <LinearLayout
+            android:id="@+id/sushi_background"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/sushi_transporter" />
 
         <ImageView
             android:id="@+id/sushi_flow"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/sushi_ikura" />
+            android:layout_width="76dp"
+            android:layout_height="82dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/tuna" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
     <!--<ListView-->
     <!--android:id="@+id/probs"-->
@@ -46,7 +58,7 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/sushi_background"
+        android:layout_below="@id/sushi_table"
         android:layout_marginEnd="4dp">
 
         <LinearLayout
@@ -72,8 +84,8 @@
         android:id="@+id/plate_images"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/probs"/>
+        android:layout_alignBottom="@+id/probs"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/submit_button"
