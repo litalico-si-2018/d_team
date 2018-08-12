@@ -56,6 +56,7 @@ class SushiFlow(val activity: Activity) {
     fun resetSushi() {
         // flowSushiで行われているアニメーションをキャンセルする
         sushiMoveAnimation.reset()
+        counter = 0.0F
     }
 
     fun calcHandX(): Float {
@@ -70,7 +71,7 @@ class SushiFlow(val activity: Activity) {
     }
 
     private fun changePlateNum(n: Int) {
-        val plates = activity.findViewById<ImageView>(R.id.plate_images)
+        val plates = activity.findViewById<ImageView>(R.id.sushi_flow)
 
         if (n == 0) {
             plates.visibility = View.INVISIBLE
@@ -83,7 +84,7 @@ class SushiFlow(val activity: Activity) {
 
     private fun startSushiTranslate() {
 
-        sushiImageView = activity.findViewById(R.id.sushi_image)
+        sushiImageView = activity.findViewById(R.id.sushi_flow)
 
 //        val set = AnimationSet(true)
 
@@ -103,6 +104,7 @@ class SushiFlow(val activity: Activity) {
     private fun startGodhandTranslate(startX: Float, result_flag: Boolean, stage: Stage) {
 
         val imageView = activity.findViewById<ImageView>(R.id.godhand)
+        imageView.visibility = View.VISIBLE
         // 設定を切り替え可能
         var startX = startX
         val set = AnimationSet(true)
@@ -135,19 +137,59 @@ class SushiFlow(val activity: Activity) {
         godhandDisappearAnimation.setFillAfter(true)
 
         set.addAnimation(godhandAppearAnimation)
-//        godhandAppearAnimation.setAnimationListener(object : Animation.AnimationListener {
-//            override fun onAnimationEnd(animation: Animation) {
-//                if (result_flag) {
-//                    resetSushi()
-//                    changePlateNum(stage.numCorrect)
-//                }
-//                imageView.startAnimation(godhandDisappearAnimation)
-//            }
-//        })
+        godhandAppearAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                printFeedbackAnswer(result_flag)
+
+                if (result_flag) {
+                    resetSushi()
+                    changePlateNum(stage.numCorrect)
+                }
+                godhandDisappearAnimation.setAnimationListener(object :Animation.AnimationListener{
+                    override fun onAnimationEnd(p0: Animation?) {
+                        deleteFeedbackAnswer()
+                    }
+
+                    override fun onAnimationRepeat(p0: Animation?) {
+//                        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onAnimationStart(p0: Animation?) {
+//                        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
+
+                imageView.startAnimation(godhandDisappearAnimation)
+                imageView.visibility = View.GONE
+            }
+        })
 
 //        imageView.startAnimation(godhandAppearAnimation)
         imageView.startAnimation(set)
+    }
 
+    private fun printFeedbackAnswer(result_flag: Boolean) {
+        val imageView = activity.findViewById<ImageView>(R.id.answer_feedback)
+        if (result_flag) {
+//            imageView.setImageResource(R.drawable.correct_circle)
 
+            imageView.visibility = View.VISIBLE
+        } else {
+//            imageView.setImageResource(R.drawable.incorrect_cross)
+//            imageView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun deleteFeedbackAnswer() {
+        val imageView = activity.findViewById<ImageView>(R.id.answer_feedback)
+        imageView.visibility = View.GONE
     }
 }
