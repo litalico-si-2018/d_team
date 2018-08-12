@@ -1,6 +1,7 @@
 package jp.summerintern.sushi.sushi
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -11,8 +12,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
-class SushiFlow(val activity: Activity) {
-    private var counter: Float = 0.0F
+class SushiFlow(val activity: MainActivity) {
+    private var counter: Int = 0
     private var t: Float = 0.0F
     private val handDuration: Int = 2000
     private val sushiDuration: Long = 10L     // 寿司の一回の移動時間。色々試す。
@@ -22,12 +23,18 @@ class SushiFlow(val activity: Activity) {
     private lateinit var sushiImageView: ImageView
 
     init {
-        Observable.interval(100L, TimeUnit.MILLISECONDS)
+        Observable.interval(1000L, TimeUnit.MILLISECONDS)
                 .timeInterval()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    counter += 0.1F
-                })
+                .subscribe {
+                    counter += 1
+                    Log.d("SushiC", counter.toString())
+                    if (counter >= 10){
+                        resetSushi()
+                        activity.refreshProbs()
+                        flowSushi()
+                    }
+                }
     }
 
     val sushi: String = "たまご"
@@ -44,11 +51,11 @@ class SushiFlow(val activity: Activity) {
         // flowSushiで行われているアニメーションをキャンセルする
         sushiMoveAnimation = AnimationUtils.loadAnimation(activity, R.anim.sushi_horizontal_move)
         sushiMoveAnimation.reset()
-        counter = 0.0F
+        counter = 0
     }
 
     fun calcHandX(): Float {
-        t = counter
+        t = counter.toFloat()
         val d = handDuration * 0.001
 
         // vは寿司の速度
