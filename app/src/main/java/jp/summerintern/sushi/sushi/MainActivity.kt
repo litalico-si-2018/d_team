@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
     private fun judge(): Boolean {
         for (i in 0 until probs.size - 1) {
             if (answers[i] != probs[i].ans_flag) {
+                seconds -= 2
                 return false
             }
         }

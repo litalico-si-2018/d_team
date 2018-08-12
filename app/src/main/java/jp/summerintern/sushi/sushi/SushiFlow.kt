@@ -108,7 +108,7 @@ class SushiFlow(val activity: Activity) {
                 Animation.ABSOLUTE, -1400.0f
         )
         // animation時間 msec
-        godhandAppearAnimation.setDuration(10000)
+        godhandAppearAnimation.setDuration(1000)
         // 繰り返し回数
         godhandAppearAnimation.setRepeatCount(0)
         // animationが終わったそのまま表示にする
