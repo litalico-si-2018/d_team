@@ -105,12 +105,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun genProbs() {
+    fun genProbs() {
 
         probs.clear()
         answers.clear()
         sushiFlow.resetSushi()
 
+        refreshProbs()
+
+        sushiFlow.flowSushi()
+    }
+
+     fun refreshProbs() {
         for (i in 0 until 3) {
             val p = Problem()
             probs.add(p)
@@ -119,7 +125,5 @@ class MainActivity : AppCompatActivity() {
             v.findViewById<TextView>(R.id.answer).setText("　")
             v.findViewById<TextView>(R.id.problem_sentence).setText(p.sentence)
         }
-
-        sushiFlow.flowSushi()
     }
 }
