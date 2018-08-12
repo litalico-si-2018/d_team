@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <ProgressBar
@@ -11,7 +10,11 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:id="@+id/sushi_background"
@@ -19,30 +22,13 @@
         android:layout_height="100dp"
         android:layout_alignBottom="@+id/remaining_time_bar">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/sushi_image"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/sushi_flow"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/sushi_flow"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/sushi_ikura"
-        android:contentDescription="@string/ikura" />
-
-    <!--めっちゃ重ねる？？？-->
-    <ImageView
-        android:id="@+id/plate_images"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/submit_button" />
 
     <!--<ListView-->
     <!--android:id="@+id/probs"-->
@@ -52,12 +38,14 @@
     <!--android:layout_alignParentRight="true" />-->
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sushi_background">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <include
@@ -74,11 +62,19 @@
         </LinearLayout>
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/plate_images"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/sushi_background"/>
+
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:text="食べる！" />
 
     <ImageView
@@ -88,6 +84,16 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/hand_mini_normal"
-        android:contentDescription="@string/description" />
+        android:contentDescription="@string/description"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/answer_feedback"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:background="#00000000"
+        android:src="@drawable/correct_circle"
+        android:visibility="gone" />
 
 </RelativeLayout>
