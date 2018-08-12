@@ -1,14 +1,153 @@
 package jp.summerintern.sushi.sushi
 
-import java.util.*
+import android.app.Activity
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.TranslateAnimation
+import android.widget.ImageView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
-class SushiFlow() {
+class SushiFlow(val activity: Activity) {
+    private var counter: Float = 0.0F
+    private var t: Float = 0.0F
+    private val handDuration: Int = 2000
+    private val sushiDuration: Long = 10L     // 寿司の一回の移動時間。色々試す。
+    private lateinit var sushiMoveAnimation: TranslateAnimation
+    private lateinit var godhandAppearAnimation: TranslateAnimation
+    private lateinit var godhandDisappearAnimation: TranslateAnimation
+    private lateinit var sushiImageView: ImageView
+
+    init {
+        Observable.interval(100L, TimeUnit.MILLISECONDS)
+                .timeInterval()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    counter += 0.1F
+                })
+
+        sushiMoveAnimation = TranslateAnimation(
+                Animation.ABSOLUTE, -100.0f,
+                Animation.ABSOLUTE, 500.0f,
+                Animation.ABSOLUTE, -1400.0f,
+                Animation.ABSOLUTE, -1400.0f
+        )
+
+        // animation時間 msec
+        sushiMoveAnimation.setDuration(this.sushiDuration)
+        // 繰り返し回数
+        sushiMoveAnimation.setRepeatCount(0)
+        // animationが終わった表示をやめる
+        sushiMoveAnimation.setFillAfter(false)
+    }
 
     val sushi: String = "たまご"
 
-    fun flowSushi(){}
+    fun flowSushi() {
+        startSushiTranslate()
+    }
 
-    fun eatSushi(result: Boolean){}
+    fun eatSushi(result_flag: Boolean, stage: Stage) {
+        startGodhandTranslate(calcHandX(), result_flag, stage) // DoubleをFloatへ変換する必要あり
+    }
 
-    fun resetSushi(){}
+    fun resetSushi() {
+        // flowSushiで行われているアニメーションをキャンセルする
+        sushiMoveAnimation.reset()
+    }
+
+    fun calcHandX(): Float {
+        t = counter
+        val d = handDuration * 0.001
+
+        // vは寿司の速度
+        val v = 100 / sushiDuration //sushiDurationは秒（ミリ秒でない）．100はパーセンテージ．
+
+        val x = v * (t + d)
+        return x.toFloat()
+    }
+
+    private fun changePlateNum(n: Int) {
+        val plates = activity.findViewById<ImageView>(R.id.plate_images)
+
+        if (n == 0) {
+            plates.visibility = View.INVISIBLE
+        } else {
+            plates.visibility = View.VISIBLE
+            val imageRes = activity.resources.getIdentifier("plates_" + n, "drawable", null)
+            plates.setImageResource(imageRes)
+        }
+    }
+
+    private fun startSushiTranslate() {
+
+        sushiImageView = activity.findViewById(R.id.sushi_image)
+
+//        val set = AnimationSet(true)
+
+        sushiImageView.startAnimation(sushiMoveAnimation)
+
+//        set.addAnimation(sushiMoveAnimation)
+//        sushiMoveAnimation.setAnimationListener(object : Animation.AnimationListener {
+//            override fun onAnimationEnd(animation: Animation) {
+//                imageView.startAnimation(sushiMoveAnimation)
+//            }
+//        })
+
+//        imageView.startAnimation(set)
+
+    }
+
+    private fun startGodhandTranslate(startX: Float, result_flag: Boolean, stage: Stage) {
+
+        val imageView = activity.findViewById<ImageView>(R.id.godhand)
+        // 設定を切り替え可能
+        var startX = startX
+        val set = AnimationSet(true)
+
+        // TranslateAnimation(int fromXType, float fromXValue, int toXType, float toXValue, int fromYType, float fromYValue, int toYType, float toYValue)
+        godhandAppearAnimation = TranslateAnimation(
+                Animation.ABSOLUTE, startX,
+                Animation.ABSOLUTE, startX,
+                Animation.ABSOLUTE, 200.0f,
+                Animation.ABSOLUTE, -1400.0f
+        )
+        // animation時間 msec
+        godhandAppearAnimation.setDuration(10000)
+        // 繰り返し回数
+        godhandAppearAnimation.setRepeatCount(0)
+        // animationが終わったそのまま表示にする
+        godhandAppearAnimation.setFillAfter(true)
+
+        godhandDisappearAnimation = TranslateAnimation(
+                Animation.ABSOLUTE, startX,
+                Animation.ABSOLUTE, startX,
+                Animation.ABSOLUTE, -1400.0f,
+                Animation.ABSOLUTE, 200.0f
+        )
+        // animation時間 msec
+        godhandDisappearAnimation.setDuration(2000)
+        // 繰り返し回数
+        godhandDisappearAnimation.setRepeatCount(0)
+        // animationが終わったそのまま表示にする
+        godhandDisappearAnimation.setFillAfter(true)
+
+        set.addAnimation(godhandAppearAnimation)
+//        godhandAppearAnimation.setAnimationListener(object : Animation.AnimationListener {
+//            override fun onAnimationEnd(animation: Animation) {
+//                if (result_flag) {
+//                    resetSushi()
+//                    changePlateNum(stage.numCorrect)
+//                }
+//                imageView.startAnimation(godhandDisappearAnimation)
+//            }
+//        })
+
+//        imageView.startAnimation(godhandAppearAnimation)
+        imageView.startAnimation(set)
+
+
+    }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <ProgressBar
@@ -25,6 +26,15 @@
             android:layout_gravity="center_vertical" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/sushi_flow"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/sushi_ikura"
+        android:contentDescription="@string/ikura" />
 
     <!--めっちゃ重ねる？？？-->
     <ImageView
@@ -70,5 +80,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="食べる！" />
+
+    <ImageView
+        android:id="@+id/godhand"
+        android:layout_width="126dp"
+        android:layout_height="157dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/hand_mini_normal"
+        android:contentDescription="@string/description" />
 
 </RelativeLayout>
