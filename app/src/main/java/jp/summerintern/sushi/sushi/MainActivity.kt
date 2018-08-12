@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
 
-        sushiFlow = SushiFlow()
+        sushiFlow = SushiFlow(this)
         genProbs()
     }
 
@@ -96,11 +96,11 @@ class MainActivity : AppCompatActivity() {
         sushiFlow.eatSushi(result, stage)
         if (result) {
             stage.updateResults(1)
-            Toast.makeText(this, "正解！", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "正解！", Toast.LENGTH_SHORT).show()
             genProbs()
         } else {
             stage.updateResults(0)
-            Toast.makeText(this, "残念！", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "残念！", Toast.LENGTH_SHORT).show()
         }
     }
 
