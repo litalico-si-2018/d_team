@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sushiList: List<String>
     private var probs = ArrayList<Problem>()
     private var answers = HashMap<Int, Boolean>()
-    private lateinit var stage: Stage
-    private var sushiFlow = SushiFlow()
+    private var stage = Stage(1, 0, 0)
+    private var sushiFlow = SushiFlow(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,19 +93,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showOneResult(result: Boolean) {
-        sushiFlow.eatSushi(result)
+        sushiFlow.eatSushi(result, stage)
         if (result) {
+            stage.updateResults(1)
             Toast.makeText(this, "正解！", Toast.LENGTH_SHORT).show()
             genProbs()
         } else {
+            stage.updateResults(0)
             Toast.makeText(this, "残念！", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun resetProbs() {
-        probs.clear()
-        answers.clear()
-        sushiFlow.resetSushi()
     }
 
     private fun genProbs() {
